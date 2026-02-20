@@ -11,9 +11,9 @@ abstract class Media extends Model
 {
     use HasFactory, HasTranslations;
 
-    public array $translatable = ['title', 'overview'];
-
     protected $fillable = ['title', 'overview', 'release_date'];
+
+    public array $translatable = ['title', 'overview'];
 
     public function genres(): MorphToMany
     {

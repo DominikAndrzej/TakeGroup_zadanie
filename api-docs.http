@@ -1,0 +1,47 @@
+### MOVIES
+
+# Fetch movies
+GET localhost/api/movies
+
+###
+
+# Fetch movies with pagination
+GET localhost/api/movies?per_page=5&page=2
+
+###
+
+# Fetch movies with translation
+GET localhost/api/movies
+Accept-language: pl
+
+### SERIES
+
+# Fetch series
+GET localhost/api/series
+
+###
+
+# Fetch series with pagination
+GET localhost/api/series?per_page=2&page=3
+
+###
+
+# Fetch series with translation
+GET localhost/api/series
+Accept-language: pl
+
+### GENRES
+
+# Fetch genres
+GET localhost/api/genres
+
+###
+
+# Fetch genres with pagination
+GET localhost/api/genres?per_page=2&page=5
+
+###
+
+# Fetch genres with translation
+GET localhost/api/genres
+Accept-language: de

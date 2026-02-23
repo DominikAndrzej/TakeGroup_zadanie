@@ -1,29 +1,29 @@
-## Wymagania
+## Requirements
 
-Aby uruchomić projekt bez konieczności instalowania lokalnego PHP czy baz danych, wymagane jest środowisko Docker:
+To run the project without the need for local PHP or database installation, a Docker environment is required:
 
-* **Windows**: Docker Desktop z włączoną integracją WSL2.
-* **Linux/macOS**: Docker oraz Docker Compose.
+* **Windows**: Docker Desktop with WSL2 integration enabled.
+* **Linux/macOS**: Docker and Docker Compose.
 
-Oraz:
-* **Klucz API**: Aktywny token (API Read Access Token) z serwisu [The Movie Database](https://www.themoviedb.org/)
+And:
+* **API KEY**: An active token (API Read Access Token) from [The Movie Database](https://www.themoviedb.org/)
 
-## Uruchamianie
+## Running
 
-### 1. Sklonuj repozytorium i wejdź do folderu projektu.
-### 2. Skopiuj plik .env.example do .env
+### 1. Clone repository and go to project directory.
+### 2. copy .env.example into .env file
 ```
 cp .env.example .env
 ```
-W pliku .env dopisz następujące linijki:
+In .env file add these lines:
 ```
-TMDB_TOKEN=twoj_token_tutaj
-TMDB_BASE_URL=TMDB_BASE_URL=https://api.themoviedb.org/3
+TMDB_TOKEN=your_token_here
+TMDB_BASE_URL=https://api.themoviedb.org/3
 ```
-### 3. Uruchom kontenery
-Jeśli nie masz PHP/Composera na maszynie hosta, użyj tej komendy w terminalu (będąc w folderze projektu). Pobierze ona obraz Composera, zamontuje Twój folder i zainstaluje wszystko, co potrzebne:
+### 3. Run containers
+If you don't have PHP/Composer on your host machine, run this command in the terminal (while in the project folder). It will pull the Composer image, mount your folder, and install everything required:
 ```
-# Uruchamiamy tymczasowy kontener z Composerem, aby zainstalować biblioteki
+# Run a temporary Composer container to install dependencies
 docker run --rm \
     -u "$(id -u):$(id -g)" \
     -v "$(pwd):/var/www/html" \
@@ -31,12 +31,20 @@ docker run --rm \
     laravelsail/php83-composer:latest \
     composer install --ignore-platform-reqs
 ```
-Następnie:
+Next:
 ```
 ./vendor/bin/sail up -d
 ```
-### 4. Zainstaluj zależności i wykonaj migracje:
+### 4. Install dependencies and run migration:
 ```
 ./vendor/bin/sail composer install
 ./vendor/bin/sail artisan migrate
 ```
+
+### Run Feature tests
+```
+./vendor/bin/sail artisan test --testsuite=Feature
+```
+
+## Api Documentation
+Endpoints descriptions are in Intellij .http format file: [api-docs.http](./api-docs.http)

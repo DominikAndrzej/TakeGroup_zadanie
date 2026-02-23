@@ -1,7 +1,7 @@
 <?php
 
-dataset('locales', [
-    'Polish' => ['pl'],
-    'English' => ['en'],
-    'German' => ['de'],
-]);
+use App\Enums\SupportedLocale;
+
+dataset('locales', function () {
+    return SupportedLocale::values();
+});

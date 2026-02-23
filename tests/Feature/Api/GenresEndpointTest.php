@@ -8,7 +8,7 @@ uses(Tests\TestCase::class, RefreshDatabase::class);
 
 test('returns genres with correct structure', function () {
     // given
-    Genre::factory()->create();
+    Genre::factory()->createOne();
 
     // when
     $response = $this->getJson('/api/genres');
@@ -29,7 +29,7 @@ test('returns genres with correct structure', function () {
 test('returns genres with correct data', function () {
     // given
     /** @var Genre $genre */
-    $genre = Genre::factory()->create();
+    $genre = Genre::factory()->createOne();
 
     // when
     $response = $this->getJson('/api/genres');
@@ -48,16 +48,18 @@ test('returns genres with correct data', function () {
 test('returns genres with translations', function (string $locale) {
     // given
     /** @var Genre $genre */
-    $genre = Genre::factory()->create();
+    $genre = Genre::factory()->createOne();
 
     $expectedName = $genre->getTranslation('name', $locale);
 
     // when
-    $response = $this->getJson('/api/genres');
+    $response = $this->getJson("/api/genres", ['Accept-Language' => $locale]);
 
     // then
     $response
         ->assertOk()
-        ->assertJsonPath('data.title', $expectedName);
+        ->assertJsonFragment([
+            'name' => $expectedName,
+        ]);
 
 })->with('locales');

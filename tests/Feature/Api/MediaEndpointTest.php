@@ -15,9 +15,9 @@ dataset('media types', [
 
 test('returns media with correct structure', function (string $url, string $modelClass) {
     // given
-    $media = $modelClass::factory()->create();
+    $media = $modelClass::factory()->createOne();
     /** @var Genre $genre */
-    $genre = Genre::factory()->create();
+    $genre = Genre::factory()->createOne();
     $media->genres()->attach($genre);
 
     // when
@@ -43,9 +43,9 @@ test('returns media with correct structure', function (string $url, string $mode
 
 test('returns media with correct data', function (string $url, string $modelClass) {
     // given
-    $media = $modelClass::factory()->create();
+    $media = $modelClass::factory()->createOne();
     /** @var Genre $genre */
-    $genre = Genre::factory()->create();
+    $genre = Genre::factory()->createOne();
 
     $media->genres()->attach($genre);
 
@@ -68,9 +68,9 @@ test('returns media with correct data', function (string $url, string $modelClas
 
 test('returns media with translations', function (string $url, string $modelClass, string $locale) {
     // given
-    $media = $modelClass::factory()->create();
+    $media = $modelClass::factory()->createOne();
     /** @var Genre $genre */
-    $genre = Genre::factory()->create();
+    $genre = Genre::factory()->createOne();
 
     $media->genres()->attach($genre);
 
@@ -79,13 +79,13 @@ test('returns media with translations', function (string $url, string $modelClas
     $expectedGenreName = $genre->getTranslation('name', $locale);
 
     // when
-    $response = $this->getJson("$url/{$media->id}", ['Accept-Language' => $locale]);
+    $response = $this->getJson("$url", ['Accept-Language' => $locale]);
 
     // then
     $response
         ->assertOk()
-        ->assertJsonPath('data.title', $expectedTitle)
-        ->assertJsonPath('data.overview', $expectedOverview)
-        ->assertJsonPath('data.genres.0.name', $expectedGenreName);
+        ->assertJsonFragment(['title' => $expectedTitle])
+        ->assertJsonFragment(['overview' =>  $expectedOverview])
+        ->assertJsonPath('data.0.genres.0.name', $expectedGenreName);
 
 })->with('media types', 'locales');

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\SupportedLocale;
 use App\Models\Genre;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,12 +18,13 @@ class GenreFactory extends Factory
      */
     public function definition(): array
     {
+        $names = [];
+            foreach (SupportedLocale::values() as $locale) {
+                $names[$locale] = $this->faker->word();
+            }
+
         return [
-            'name' => [
-                'pl' => $this->faker->word(),
-                'en' => $this->faker->word(),
-                'de' => $this->faker->word(),
-            ],
+            'name' => $names,
         ];
     }
 }

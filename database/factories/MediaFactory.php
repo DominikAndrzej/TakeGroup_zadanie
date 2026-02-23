@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\SupportedLocale;
 use App\Models\Media;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -15,17 +16,17 @@ class MediaFactory extends Factory
      */
     public function definition(): array
     {
+        $titles = [];
+        $overviews = [];
+
+        foreach (SupportedLocale::values() as $locale) {
+            $titles[$locale] = $this->faker->sentence(3);
+            $overviews[$locale] = $this->faker->paragraph();
+        }
+
         return [
-            'title' => [
-                'pl' => $this->faker->sentence(3),
-                'en' => $this->faker->sentence(3),
-                'de' => $this->faker->sentence(3),
-            ],
-            'overview' => [
-                'pl' => $this->faker->paragraph(),
-                'en' => $this->faker->paragraph(),
-                'de' => $this->faker->paragraph(),
-            ],
+            'title' => $titles,
+            'overview' => $overviews,
             'release_date' => $this->faker->date(),
         ];
     }

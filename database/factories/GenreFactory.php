@@ -25,6 +25,7 @@ class GenreFactory extends Factory
 
         return [
             'name' => $names,
+            'tmdb_id' => $this->faker->numberBetween(1,10000)
         ];
     }
 }

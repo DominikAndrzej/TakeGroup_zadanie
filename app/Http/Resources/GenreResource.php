@@ -17,6 +17,7 @@ class GenreResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'tmdb_id' => $this->tmdb_id,
         ];
     }
 }

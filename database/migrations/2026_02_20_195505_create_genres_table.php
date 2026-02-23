@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('genres', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('tmdb_id')->unique();
             $table->json('name');
             $table->timestamps();
         });

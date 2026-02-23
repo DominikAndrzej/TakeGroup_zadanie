@@ -27,6 +27,7 @@ class MediaFactory extends Factory
         return [
             'title' => $titles,
             'overview' => $overviews,
+            'tmdb_id' => $this->faker->numberBetween(1,10000),
             'release_date' => $this->faker->date(),
         ];
     }

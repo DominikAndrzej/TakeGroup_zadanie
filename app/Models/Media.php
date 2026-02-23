@@ -11,7 +11,7 @@ abstract class Media extends Model
 {
     use HasFactory, HasTranslations;
 
-    protected $fillable = ['title', 'overview', 'release_date'];
+    protected $fillable = ['title', 'overview', 'release_date', 'tmdb_id'];
 
     public array $translatable = ['title', 'overview'];
 
@@ -19,4 +19,16 @@ abstract class Media extends Model
     {
         return $this->morphToMany(Genre::class, 'genreable');
     }
+
+    public static function tmdbMapping(): array
+    {
+        return [
+            'title' => 'title',
+            'overview' => 'overview',
+            'release_date' => 'release_date',
+            'tmdb_id' => 'tmdb_id'
+        ];
+    }
+
+    abstract public static function tmdbType(): string;
 }

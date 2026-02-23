@@ -9,10 +9,11 @@ use Illuminate\Http\Request;
 
 class SerieController extends Controller
 {
-    //
-    public function index()
+    public function index(Request $request)
     {
-        $series = Serie::with('genres')->paginate();
+        $perPage = $request->integer('per_page', 15);
+
+        $series = Serie::with('genres')->paginate($perPage);
 
         return MediaResource::collection($series);
     }

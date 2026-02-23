@@ -89,3 +89,15 @@ test('returns media with translations', function (string $url, string $modelClas
         ->assertJsonPath('data.0.genres.0.name', $expectedGenreName);
 
 })->with('media types', 'locales');
+
+it('allows to change the number of results per page', function () {
+    Movie::factory()->count(10)->create();
+
+    $response = $this->getJson('/api/movies?per_page=5');
+
+    $response
+        ->assertOk()
+        ->assertJsonCount(5, 'data');
+
+    $response->assertJsonPath('meta.per_page', 5);
+});

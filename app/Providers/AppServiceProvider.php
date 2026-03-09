@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\TmdbService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +12,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+//        $this->app->bind(TmdbServiceInterface::class, TmdbService::class);
     }
 
     /**
@@ -19,6 +20,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        \URL::forceRootUrl(config('app.url'));
     }
 }

@@ -21,6 +21,7 @@ services:
             - '.:/var/www/html'
         networks:
             - sail
+            - nginx-proxy-manager_default
         depends_on:
             - mysql
             - redis
@@ -84,6 +85,8 @@ services:
 networks:
     sail:
         driver: bridge
+    nginx-proxy-manager_default:
+        external: true
 volumes:
     sail-mysql:
         driver: local
